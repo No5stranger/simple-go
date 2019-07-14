@@ -5,4 +5,5 @@ import "testing"
 func TestFileOperation(t *testing.T) {
 	CreateFile()
 	WriteFile()
+	ReadFile()
 }

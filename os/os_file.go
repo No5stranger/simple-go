@@ -1,6 +1,8 @@
 package os_file
 
 import (
+	"fmt"
+	"io"
 	"io/ioutil"
 	"os"
 )
@@ -18,7 +20,7 @@ func CreateFile() {
 }
 
 func WriteFile() {
-	fc := []byte("write by ioutil")
+	fc := []byte("write by ioutil\n")
 	err := ioutil.WriteFile(FileName, fc, 0644)
 	if err != nil {
 		panic(err)
@@ -28,6 +30,22 @@ func WriteFile() {
 	if err != nil {
 		panic(err)
 	}
-	fd.WriteString("write by os.Open")
+	fd.WriteString("write by os.Open\n")
 	fd.Close()
+}
+
+func ReadFile() {
+	fd, err := os.OpenFile(FileName, os.O_RDONLY, 0644)
+	if err != nil {
+		panic(err)
+	}
+	var text = make([]byte, 1024)
+	for {
+		_, err := fd.Read(text)
+		if err == io.EOF {
+			break
+		}
+		fmt.Println(string(text))
+	}
+	fmt.Println("read file end")
 }
