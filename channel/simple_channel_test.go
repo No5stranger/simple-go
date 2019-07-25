@@ -9,3 +9,7 @@ func TestChannel(t *testing.T) {
 func TestRangeChannel(t *testing.T) {
 	RangeChannel()
 }
+
+func TestRandomGo(t *testing.T) {
+	RandomGo()
+}
