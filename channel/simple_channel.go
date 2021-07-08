@@ -4,21 +4,39 @@ import "fmt"
 
 func SendReceive() {
 	ch := make(chan int, 2)
+	ch2 := make(chan int, 3)
 	go func() {
 		for i := 0; i < 10; i++ {
 			fmt.Printf("sender send %d\n", i)
+			ch <- i
 		}
-		fmt.Printf("sender closing channel")
+		fmt.Printf("sender closing channel\n")
 		close(ch)
 	}()
-	for {
-		elem, ok := <-ch
-		if !ok {
-			fmt.Printf("no elemement received\n")
-			break
+	go func() {
+		for j := 0; j < 5; j++ {
+			ch2 <- j
 		}
-		fmt.Printf("receiver get %d", elem)
+		close(ch2)
+	}()
+	select {
+	case e1, ok := <-ch:
+		if ok {
+			fmt.Printf("receiver 1 get %d\n", e1)
+		} else {
+			fmt.Printf("1 no elemement received\n")
+		}
+	case e2 := <-ch2:
+		fmt.Printf("receiver 2 get %d\n", e2)
 	}
+	//for {
+	//elem, ok := <-ch
+	//if !ok {
+	//fmt.Printf("no elemement received\n")
+	//break
+	//}
+	//fmt.Printf("receiver get %d\n", elem)
+	//}
 }
 
 func RangeChannel() {
