@@ -4,6 +4,7 @@ import (
 	"testing"
 )
 
-func TestWaitGroupFor(t *testing.T) {
-	WaitGroupFor()
+func TestWaitGrouor(t *testing.T) {
+	//WaitGroupFor()
+	DoTwoWaitGroup()
 }
